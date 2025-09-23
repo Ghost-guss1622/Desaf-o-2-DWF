@@ -19,30 +19,32 @@ public class UsuariosController {
     @Autowired
     private UsuariosRepository usuariosRepository;
 
-    @Operation(summary = "Create a new user", description = "Creates a new user with name, last name and email")
-    @ApiResponse(responseCode = "200", description = "User successfully created")
-    @ApiResponse(responseCode = "400", description = "Validation error")
+    //Crear un usuario
+    @Operation(summary = "Crear un nuevo usuario", description = "Crea un nuevo usuario con nombre, apellido, email y fecha de nacimiento")
+    @ApiResponse(responseCode = "200", description = "Usuario creado exitosamente")
+    @ApiResponse(responseCode = "400", description = "Error de validación")
     @PostMapping
     public ResponseEntity<Usuarios> crearUsuario(@Valid @RequestBody UsuariosDTo usuariosDTo) {
         Usuarios nuevoUsuario = new Usuarios();
         nuevoUsuario.setNombre(usuariosDTo.getNombre());
         nuevoUsuario.setApellido(usuariosDTo.getApellido());
         nuevoUsuario.setEmail(usuariosDTo.getEmail());
+        nuevoUsuario.setFechanac(usuariosDTo.getFechaNacimiento());
 
         Usuarios savedUsuario = usuariosRepository.save(nuevoUsuario);
         return ResponseEntity.ok(savedUsuario);
     }
 
-    @Operation(summary = "Get all users", description = "Retrieve the list of all users")
-    @ApiResponse(responseCode = "200", description = "List of users retrieved successfully")
+    @Operation(summary = "Obtener todos los usuarios", description = "Recupera la lista de todos los usuarios")
+    @ApiResponse(responseCode = "200", description = "Lista de usuarios recuperada exitosamente")
     @GetMapping
     public ResponseEntity<List<Usuarios>> listarUsuarios() {
         return ResponseEntity.ok(usuariosRepository.findAll());
     }
 
-    @Operation(summary = "Get user by ID", description = "Retrieve a specific user by its ID")
-    @ApiResponse(responseCode = "200", description = "User found")
-    @ApiResponse(responseCode = "404", description = "User not found")
+    @Operation(summary = "Obtener usuario por ID", description = "Recupera un usuario específico por su ID")
+    @ApiResponse(responseCode = "200", description = "Usuario encontrado")
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     @GetMapping("/{id}")
     public ResponseEntity<Usuarios> obtenerPorId(@PathVariable Long id) {
         return usuariosRepository.findById(id)
@@ -50,9 +52,10 @@ public class UsuariosController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Update a user", description = "Update the information of an existing user by ID")
-    @ApiResponse(responseCode = "200", description = "User successfully updated")
-    @ApiResponse(responseCode = "404", description = "User not found")
+    //Actualizar un usuario
+    @Operation(summary = "Actualizar un usuario", description = "Actualiza la información de un usuario existente por ID")
+    @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente")
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     @PutMapping("/{id}")
     public ResponseEntity<Usuarios> actualizarUsuario(@PathVariable Long id, @Valid @RequestBody UsuariosDTo usuariosDTo) {
         return usuariosRepository.findById(id)
@@ -60,14 +63,15 @@ public class UsuariosController {
                     usuarioExistente.setNombre(usuariosDTo.getNombre());
                     usuarioExistente.setApellido(usuariosDTo.getApellido());
                     usuarioExistente.setEmail(usuariosDTo.getEmail());
+                    usuarioExistente.setFechanac(usuariosDTo.getFechaNacimiento());
                     return ResponseEntity.ok(usuariosRepository.save(usuarioExistente));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    @Operation(summary = "Delete a user", description = "Delete an existing user by ID")
-    @ApiResponse(responseCode = "204", description = "User successfully deleted")
-    @ApiResponse(responseCode = "404", description = "User not found")
+    //Eliminar un usuario
+    @Operation(summary = "Eliminar un usuario", description = "Elimina un usuario existente por ID")
+    @ApiResponse(responseCode = "204", description = "Usuario eliminado exitosamente")
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         if (usuariosRepository.existsById(id)) {
@@ -77,4 +81,3 @@ public class UsuariosController {
         return ResponseEntity.notFound().build();
     }
 }
-

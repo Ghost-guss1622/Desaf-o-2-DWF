@@ -26,6 +26,7 @@ public class Suscripcion {
     @Column(nullable = false)
     private String estado;
 
+    // Getters y setters
     public Long getId() {
         return id;
     }

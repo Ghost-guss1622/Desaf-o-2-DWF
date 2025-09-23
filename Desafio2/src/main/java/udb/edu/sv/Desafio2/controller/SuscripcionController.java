@@ -19,9 +19,10 @@ public class SuscripcionController {
     @Autowired
     private SuscripcionRepository suscripcionRepository;
 
-    @Operation(summary = "Create a new subscription", description = "Creates a new subscription with name, type, duration (months) and price")
-    @ApiResponse(responseCode = "200", description = "Subscription successfully created")
-    @ApiResponse(responseCode = "400", description = "Validation error")
+    //Crear una nueva suscripcion
+    @Operation(summary = "Crear una nueva suscripción", description = "Crea una nueva suscripción con nombre, tipo, duración (meses) y precio")
+    @ApiResponse(responseCode = "200", description = "Suscripción creada exitosamente")
+    @ApiResponse(responseCode = "400", description = "Error de validación")
     @PostMapping
     public ResponseEntity<Suscripcion> crearSuscripcion(@Valid @RequestBody SuscripcionesDTo suscripcionDTo) {
         Suscripcion suscrip = new Suscripcion();
@@ -34,16 +35,16 @@ public class SuscripcionController {
         return ResponseEntity.ok(suscripciones);
     }
 
-    @Operation(summary = "Get all subscriptions", description = "Retrieve the list of all subscriptions")
-    @ApiResponse(responseCode = "200", description = "List of subscriptions retrieved successfully")
+    @Operation(summary = "Obtener todas las suscripciones", description = "Recupera la lista de todas las suscripciones")
+    @ApiResponse(responseCode = "200", description = "Lista de suscripciones recuperada exitosamente")
     @GetMapping
     public ResponseEntity<List<Suscripcion>> listarSuscripciones() {
         return ResponseEntity.ok(suscripcionRepository.findAll());
     }
 
-    @Operation(summary = "Get subscription by ID", description = "Retrieve a specific subscription by its ID")
-    @ApiResponse(responseCode = "200", description = "Subscription found")
-    @ApiResponse(responseCode = "404", description = "Subscription not found")
+    @Operation(summary = "Obtener suscripción por ID", description = "Recupera una suscripción específica por su ID")
+    @ApiResponse(responseCode = "200", description = "Suscripción encontrada")
+    @ApiResponse(responseCode = "404", description = "Suscripción no encontrada")
     @GetMapping("/{id}")
     public ResponseEntity<Suscripcion> obtenerPorId(@PathVariable Long id) {
         return suscripcionRepository.findById(id)
@@ -51,9 +52,10 @@ public class SuscripcionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Update a subscription", description = "Update the information of an existing subscription by ID")
-    @ApiResponse(responseCode = "200", description = "Subscription successfully updated")
-    @ApiResponse(responseCode = "404", description = "Subscription not found")
+    //Actualizar una suscripcion
+    @Operation(summary = "Actualizar una suscripción", description = "Actualiza la información de una suscripción existente por ID")
+    @ApiResponse(responseCode = "200", description = "Suscripción actualizada exitosamente")
+    @ApiResponse(responseCode = "404", description = "Suscripción no encontrada")
     @PutMapping("/{id}")
     public ResponseEntity<Suscripcion> actualizarSucripciones(@PathVariable Long id, @Valid @RequestBody SuscripcionesDTo suscripcionesDTo) {
         return suscripcionRepository.findById(id)
@@ -67,9 +69,10 @@ public class SuscripcionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Delete a subscription", description = "Delete an existing subscription by ID")
-    @ApiResponse(responseCode = "204", description = "Subscription successfully deleted")
-    @ApiResponse(responseCode = "404", description = "Subscription not found")
+    //Elimanr una suscripcion
+    @Operation(summary = "Eliminar una suscripción", description = "Elimina una suscripción existente por ID")
+    @ApiResponse(responseCode = "204", description = "Suscripción eliminada exitosamente")
+    @ApiResponse(responseCode = "404", description = "Suscripción no encontrada")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarSuscripcion(@PathVariable Long id) {
         if (suscripcionRepository.existsById(id)) {

@@ -2,6 +2,8 @@ package udb.edu.sv.Desafio2;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "usuario")
 public class Usuarios {
@@ -17,7 +19,9 @@ private Long id;
 
     @Column(nullable = false, unique = true)
     private String email;
+    private LocalDate fechanac;
 
+    // Getters y setters
     public long getId(){
         return id;
     }
@@ -44,5 +48,9 @@ private Long id;
     public void setEmail(String email){
         this.email = email;
     }
+
+    public void setFechanac(LocalDate fechanac) {
+        this.fechanac = fechanac;
+}
 }
 
