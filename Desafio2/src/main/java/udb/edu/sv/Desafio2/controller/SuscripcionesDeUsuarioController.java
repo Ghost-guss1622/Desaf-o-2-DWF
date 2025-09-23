@@ -71,6 +71,7 @@ public class SuscripcionesDeUsuarioController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    //Actualizar una suscripcion
     @Operation(summary = "Actualizar una suscripción de usuario", description = "Actualiza la información de una suscripción de usuario existente por ID")
     @ApiResponse(responseCode = "200", description = "Suscripción de usuario actualizada exitosamente")
     @ApiResponse(responseCode = "400", description = "Error de validación o ID de usuario/suscripción no encontrado")
@@ -98,7 +99,7 @@ public class SuscripcionesDeUsuarioController {
         SuscripcionesDeUsuario updated = suscripcionesDeUsuarioRepository.save(suscripcionExistente);
         return ResponseEntity.ok(updated);
     }
-
+//Actualizar una suscripcion
     @Operation(summary = "Eliminar una suscripción de usuario", description = "Elimina una suscripción de usuario existente por ID")
     @ApiResponse(responseCode = "204", description = "Suscripción de usuario eliminada exitosamente")
     @ApiResponse(responseCode = "404", description = "Suscripción de usuario no encontrada")
@@ -111,3 +112,4 @@ public class SuscripcionesDeUsuarioController {
         return ResponseEntity.notFound().build();
     }
 }
+
